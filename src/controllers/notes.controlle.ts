@@ -30,7 +30,15 @@ export class NotesController {
       if (!userExists) {
         return RequestError.notFound(res, "user");
       }
-      return RequestSuccess.ok(res, "notes ok", userExists.notes);
+      return res.status(200).send({
+        ok: true,
+        message: "notes ok",
+        notes: userExists.notes.map((note) => ({
+          id: note.id,
+          description: note.description,
+          detail: note.detail,
+        })),
+      });
     } catch (error: any) {
       return RequestError.ClientError(res, error);
     }

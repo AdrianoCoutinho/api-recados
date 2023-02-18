@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { UsersController } from "../controllers/users.controller";
+import { Users } from "../database/users";
 import { RequestError } from "../statusResponses/Error";
 
 export class UserValidateMiddleware {
@@ -35,6 +36,30 @@ export class UserValidateMiddleware {
           res,
           "there is already a user with this email"
         );
+      }
+
+      next();
+    } catch (error: any) {
+      return RequestError.ClientError(res, error);
+    }
+  }
+  public static ValidateLogin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email, password } = req.body;
+      const usersData = [...Users];
+      const emailExists = usersData.find((user) => user.email === email);
+      if (!emailExists) {
+        return res.status(403).send({
+          ok: false,
+          message: "Incorrect email or password",
+        });
+      }
+
+      if (emailExists.password !== password) {
+        return res.status(403).send({
+          ok: false,
+          message: "Incorrect email or password",
+        });
       }
 
       next();

@@ -30,6 +30,20 @@ export class UsersController {
     }
   }
 
+  public login(req: Request, res: Response) {
+    try {
+      const { email } = req.body;
+      const usersData = [...Users];
+      const user = usersData.find((user) => user.email === email);
+
+      return RequestSuccess.ok(res, "Login successfully done", {
+        id: user?.id,
+      });
+    } catch (error: any) {
+      return RequestError.ClientError(res, error);
+    }
+  }
+
   public getByEmail(email: string) {
     const usersData = [...Users];
     const emailExists = usersData.find((user) => user.email === email);
