@@ -38,6 +38,7 @@ export class UsersController {
 
       return RequestSuccess.ok(res, "Login successfully done", {
         id: user?.id,
+        name: user?.name,
       });
     } catch (error: any) {
       return RequestError.ClientError(res, error);
@@ -49,36 +50,4 @@ export class UsersController {
     const emailExists = usersData.find((user) => user.email === email);
     return emailExists;
   }
-
-  // public addNote(req: Request, res: Response) {
-  //   try {
-  //     const { id } = req.params;
-  //     const { detail, description } = req.body;
-  //     const userExists = Users.findIndex((user) => user.id === id);
-  //     if (userExists < 0) {
-  //       return RequestError.notFound(res, "user");
-  //     }
-  //     const newNote = {
-  //       detail,
-  //       description
-  //     }
-  //     Users[userExists].notes = []
-  //     return RequestSuccess.created(res, "note", newNote);
-  //   } catch (error: any) {
-  //     return RequestError.ClientError(res, error);
-  //   }
-  // }
-
-  // public getNotes(req: Request, res: Response) {
-  //   try {
-  //     const { id } = req.params;
-  //     const userExists = Users.find((user) => user.id === id);
-  //     if (!userExists) {
-  //       return RequestError.notFound(res, "user");
-  //     }
-  //     return RequestSuccess.ok(res, "notes ok", userExists.notes);
-  //   } catch (error: any) {
-  //     return RequestError.ClientError(res, error);
-  //   }
-  // }
 }

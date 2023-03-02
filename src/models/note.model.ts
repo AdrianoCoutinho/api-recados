@@ -2,8 +2,10 @@ import { v4 as createUuid } from "uuid";
 
 export class Note {
   private _id: string;
+  private _arquived: boolean;
   constructor(private _detail: string, private _description: string) {
     this._id = createUuid();
+    this._arquived = false;
   }
 
   public get id() {
@@ -18,6 +20,10 @@ export class Note {
     return this._description;
   }
 
+  public get arquived() {
+    return this._arquived;
+  }
+
   public set detail(detail: string) {
     this._detail = detail;
   }
@@ -26,11 +32,16 @@ export class Note {
     this._description = description;
   }
 
+  public set arquived(state: boolean) {
+    this._arquived = state;
+  }
+
   public toJson() {
     return {
       id: this._id,
       detail: this._detail,
       description: this._description,
+      arquived: this._arquived,
     };
   }
 }

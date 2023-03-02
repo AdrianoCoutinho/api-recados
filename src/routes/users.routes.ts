@@ -18,8 +18,12 @@ export const userRoutes = () => {
 
   app.get("/:id/notes", new NotesController().getNotes);
 
-  app.get("/", new UsersController().list);
   app.post("/:id/notes", new NotesController().addNote);
 
+  app.put("/:id/notes/:noteid", new NotesController().editNote);
+
+  app.delete("/:id/notes/:noteid", new NotesController().deleteNote);
+
+  app.get("/", new UsersController().list);
   return app;
 };
