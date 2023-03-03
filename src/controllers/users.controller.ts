@@ -50,4 +50,24 @@ export class UsersController {
     const emailExists = usersData.find((user) => user.email === email);
     return emailExists;
   }
+
+  public get(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const usersData = [...Users];
+      const user = usersData.find((user) => user.id === id);
+      if (user) {
+        return res.status(200).send({
+          ok: true,
+          message: "usuario encontrado",
+        });
+      }
+      return res.status(200).send({
+        ok: false,
+        message: "usuario não encontrado",
+      });
+    } catch (error: any) {
+      return RequestError.ClientError(res, error);
+    }
+  }
 }

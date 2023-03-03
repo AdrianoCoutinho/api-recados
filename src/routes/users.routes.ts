@@ -5,6 +5,9 @@ import { UserValidateMiddleware } from "../middlewares/user-validate.middleware"
 
 export const userRoutes = () => {
   const app = Router();
+
+  app.get("/:id", new UsersController().get);
+
   app.post(
     "/",
     UserValidateMiddleware.ValidateRegister,

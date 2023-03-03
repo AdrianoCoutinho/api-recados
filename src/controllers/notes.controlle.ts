@@ -46,7 +46,7 @@ export class NotesController {
   public editNote(req: Request, res: Response) {
     try {
       const { id, noteid } = req.params;
-      const { detail, description } = req.body;
+      const { detail, description, arquived } = req.body;
       const userExists = Users.findIndex((user) => user.id === id);
       if (userExists < 0) {
         return RequestError.notFound(res, "user");
@@ -57,6 +57,10 @@ export class NotesController {
       );
       if (noteExists < 0) {
         return RequestError.notFound(res, "note");
+      }
+
+      if (arquived) {
+        Users[userExists].notes[noteExists].arquived = arquived;
       }
 
       if (detail) {
