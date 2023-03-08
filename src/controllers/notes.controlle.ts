@@ -36,6 +36,7 @@ export class NotesController {
           id: note.id,
           description: note.description,
           detail: note.detail,
+          arquived: note.arquived,
         })),
       });
     } catch (error: any) {
@@ -47,6 +48,7 @@ export class NotesController {
     try {
       const { id, noteid } = req.params;
       const { detail, description, arquived } = req.body;
+
       const userExists = Users.findIndex((user) => user.id === id);
       if (userExists < 0) {
         return RequestError.notFound(res, "user");
@@ -59,7 +61,8 @@ export class NotesController {
         return RequestError.notFound(res, "note");
       }
 
-      if (arquived) {
+      if (arquived != undefined) {
+        console.log(arquived);
         Users[userExists].notes[noteExists].arquived = arquived;
       }
 
