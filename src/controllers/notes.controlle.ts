@@ -25,10 +25,62 @@ export class NotesController {
   public getNotes(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      const { detail, arquived } = req.query;
       const userExists = Users.find((user) => user.id === id);
       if (!userExists) {
         return RequestError.notFound(res, "user");
       }
+
+      if (detail && arquived != undefined) {
+        const filtredNote = userExists.notes.filter(
+          (note) =>
+            note.detail.includes(detail.toString()) &&
+            note.arquived.toString() === arquived
+        );
+        return res.status(200).send({
+          ok: true,
+          message: "notes ok",
+          notes: filtredNote.map((note) => ({
+            id: note.id,
+            description: note.description,
+            detail: note.detail,
+            arquived: note.arquived,
+          })),
+        });
+      }
+
+      if (detail) {
+        const filtredNote = userExists.notes.filter((note) =>
+          note.detail.includes(detail.toString())
+        );
+        return res.status(200).send({
+          ok: true,
+          message: "notes ok",
+          notes: filtredNote.map((note) => ({
+            id: note.id,
+            description: note.description,
+            detail: note.detail,
+            arquived: note.arquived,
+          })),
+        });
+      }
+
+      if (arquived != undefined) {
+        const filtredNote = userExists.notes.filter(
+          (note) => note.arquived.toString() === arquived
+        );
+        return res.status(200).send({
+          ok: true,
+          message: "notes ok",
+          notes: filtredNote.map((note) => ({
+            id: note.id,
+            description: note.description,
+            detail: note.detail,
+            arquived: note.arquived,
+          })),
+        });
+      }
+
       return res.status(200).send({
         ok: true,
         message: "notes ok",
@@ -62,7 +114,6 @@ export class NotesController {
       }
 
       if (arquived != undefined) {
-        console.log(arquived);
         Users[userExists].notes[noteExists].arquived = arquived;
       }
 
