@@ -30,61 +30,36 @@ export class NotesController {
       if (!userExists) {
         return RequestError.notFound(res, "user");
       }
-
-      if (detail && arquived != undefined) {
-        const filtredNote = userExists.notes.filter(
-          (note) =>
-            note.detail.includes(detail.toString()) &&
-            note.arquived.toString() === arquived
-        );
-        return res.status(200).send({
-          ok: true,
-          message: "notes ok",
-          notes: filtredNote.map((note) => ({
-            id: note.id,
-            description: note.description,
-            detail: note.detail,
-            arquived: note.arquived,
-          })),
-        });
+      console.log(detail);
+      console.log(arquived);
+      let filtredNote: any = [];
+      if (detail === "" && arquived && arquived.toLocaleString() === "true") {
+        filtredNote = userExists.notes;
       }
 
-      if (detail) {
-        const filtredNote = userExists.notes.filter((note) =>
+      if (detail === "" && arquived && arquived.toLocaleString() === "false") {
+        filtredNote = userExists.notes.filter(
+          (note) => note.arquived === false
+        );
+      }
+
+      if (detail && arquived && arquived.toLocaleString() === "true") {
+        filtredNote = userExists.notes.filter((note) =>
           note.detail.includes(detail.toString())
         );
-        return res.status(200).send({
-          ok: true,
-          message: "notes ok",
-          notes: filtredNote.map((note) => ({
-            id: note.id,
-            description: note.description,
-            detail: note.detail,
-            arquived: note.arquived,
-          })),
-        });
       }
 
-      if (arquived != undefined) {
-        const filtredNote = userExists.notes.filter(
-          (note) => note.arquived.toString() === arquived
+      if (detail && arquived && arquived.toLocaleString() === "false") {
+        filtredNote = userExists.notes.filter(
+          (note) =>
+            note.detail.includes(detail.toString()) && note.arquived === false
         );
-        return res.status(200).send({
-          ok: true,
-          message: "notes ok",
-          notes: filtredNote.map((note) => ({
-            id: note.id,
-            description: note.description,
-            detail: note.detail,
-            arquived: note.arquived,
-          })),
-        });
       }
 
       return res.status(200).send({
         ok: true,
         message: "notes ok",
-        notes: userExists.notes.map((note) => ({
+        notes: filtredNote.map((note: any) => ({
           id: note.id,
           description: note.description,
           detail: note.detail,
