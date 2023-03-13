@@ -30,30 +30,23 @@ export class NotesController {
       if (!userExists) {
         return RequestError.notFound(res, "user");
       }
-      console.log(detail);
-      console.log(arquived);
-      let filtredNote: any = [];
-      if (detail === "" && arquived && arquived.toLocaleString() === "true") {
-        filtredNote = userExists.notes;
-      }
 
-      if (detail === "" && arquived && arquived.toLocaleString() === "false") {
+      let filtredNote = userExists.notes;
+      if (detail != undefined && arquived?.toString() === "false") {
         filtredNote = userExists.notes.filter(
-          (note) => note.arquived === false
+          (note) =>
+            note.detail.includes(detail.toString()) && note.arquived === false
         );
       }
 
-      if (detail && arquived && arquived.toLocaleString() === "true") {
+      if (detail != undefined && arquived?.toString() === "true") {
         filtredNote = userExists.notes.filter((note) =>
           note.detail.includes(detail.toString())
         );
       }
 
-      if (detail && arquived && arquived.toLocaleString() === "false") {
-        filtredNote = userExists.notes.filter(
-          (note) =>
-            note.detail.includes(detail.toString()) && note.arquived === false
-        );
+      if (detail === undefined && arquived === undefined) {
+        filtredNote = userExists.notes.filter((note) => note.arquived === true);
       }
 
       return res.status(200).send({
