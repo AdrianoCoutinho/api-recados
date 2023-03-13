@@ -11,12 +11,12 @@ export class NotesController {
       const { detail, description } = req.body;
       const userExists = Users.findIndex((user) => user.id === id);
       if (userExists < 0) {
-        return RequestError.notFound(res, "user");
+        return RequestError.notFound(res, "usuário");
       }
       const newNote = new Note(detail, description);
 
       Users[userExists].notes = [...Users[userExists].notes, newNote];
-      return RequestSuccess.created(res, "note", newNote.toJson());
+      return RequestSuccess.created(res, "recado", newNote.toJson());
     } catch (error: any) {
       return RequestError.ClientError(res, error);
     }
@@ -28,7 +28,7 @@ export class NotesController {
       const { detail, arquived } = req.query;
       const userExists = Users.find((user) => user.id === id);
       if (!userExists) {
-        return RequestError.notFound(res, "user");
+        return RequestError.notFound(res, "usuário");
       }
 
       let filtredNote = userExists.notes;
@@ -51,7 +51,7 @@ export class NotesController {
 
       return res.status(200).send({
         ok: true,
-        message: "notes ok",
+        message: "recados listados com sucesso",
         notes: filtredNote.map((note: any) => ({
           id: note.id,
           description: note.description,
@@ -71,14 +71,14 @@ export class NotesController {
 
       const userExists = Users.findIndex((user) => user.id === id);
       if (userExists < 0) {
-        return RequestError.notFound(res, "user");
+        return RequestError.notFound(res, "usuário");
       }
 
       const noteExists = Users[userExists].notes.findIndex(
         (note) => note.id === noteid
       );
       if (noteExists < 0) {
-        return RequestError.notFound(res, "note");
+        return RequestError.notFound(res, "recado");
       }
 
       if (arquived != undefined) {
@@ -97,7 +97,7 @@ export class NotesController {
 
       return RequestSuccess.ok(
         res,
-        "the note has been updated",
+        "o recado foi editado com sucesso",
         updatedNote.toJson()
       );
     } catch (error: any) {
@@ -110,18 +110,18 @@ export class NotesController {
       const { id, noteid } = req.params;
       const userExists = Users.findIndex((user) => user.id === id);
       if (userExists < 0) {
-        return RequestError.notFound(res, "user");
+        return RequestError.notFound(res, "usuário");
       }
       const noteExists = Users[userExists].notes.findIndex(
         (note) => note.id === noteid
       );
       if (noteExists < 0) {
-        return RequestError.notFound(res, "note");
+        return RequestError.notFound(res, "recado");
       }
       const deletedNote = Users[userExists].notes.splice(noteExists, 1);
       return res.status(200).send({
         ok: true,
-        message: "notes deleted",
+        message: "recado deletado com sucesso",
         note: deletedNote[0].toJson(),
       });
     } catch (error: any) {

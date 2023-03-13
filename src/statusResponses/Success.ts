@@ -12,7 +12,7 @@ export class RequestSuccess {
   public static created(res: Response, message: string, data: any) {
     return res.status(201).send({
       ok: true,
-      message: `${message} was created`,
+      message: `${message} foi criado`,
       data,
     });
   }

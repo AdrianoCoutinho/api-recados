@@ -24,7 +24,7 @@ export class UsersController {
       const user = new User(name, email, password);
       Users.push(user);
 
-      return RequestSuccess.created(res, "user", user.toJson());
+      return RequestSuccess.created(res, "usuário", user.toJson());
     } catch (error: any) {
       return RequestError.ClientError(res, error);
     }
@@ -36,7 +36,7 @@ export class UsersController {
       const usersData = [...Users];
       const user = usersData.find((user) => user.email === email);
 
-      return RequestSuccess.ok(res, "Login successfully done", {
+      return RequestSuccess.ok(res, "Logado com sucesso", {
         id: user?.id,
         name: user?.name,
       });

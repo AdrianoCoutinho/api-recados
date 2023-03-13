@@ -13,28 +13,28 @@ export class UserValidateMiddleware {
       const { name, email, password, repassword } = req.body;
       const emailExists = new UsersController().getByEmail(email);
       if (!name) {
-        return RequestError.fieldNotProvided(res, "name");
+        return RequestError.fieldNotProvided(res, "nome");
       }
 
       if (!email) {
         return RequestError.fieldNotProvided(res, "email");
       }
       if (!password) {
-        return RequestError.fieldNotProvided(res, "password");
+        return RequestError.fieldNotProvided(res, "senha");
       }
 
       if (!repassword) {
-        return RequestError.fieldNotProvided(res, "repassword");
+        return RequestError.fieldNotProvided(res, "repetir senha");
       }
 
       if (repassword != password) {
-        return RequestError.genericError(res, "passwords do not match");
+        return RequestError.genericError(res, "senhas não coincidem");
       }
 
       if (emailExists) {
         return RequestError.genericError(
           res,
-          "there is already a user with this email"
+          "Já existe um usuário com este email"
         );
       }
 
@@ -51,14 +51,14 @@ export class UserValidateMiddleware {
       if (!emailExists) {
         return res.status(403).send({
           ok: false,
-          message: "Incorrect email or password",
+          message: "Email ou senha incorretos",
         });
       }
 
       if (emailExists.password !== password) {
         return res.status(403).send({
           ok: false,
-          message: "Incorrect email or password",
+          message: "Email ou senha incorretos",
         });
       }
 
