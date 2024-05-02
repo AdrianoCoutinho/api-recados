@@ -32,22 +32,6 @@ export class NotesController {
       }
 
       let filtredNote = userExists.notes;
-      if (detail != undefined && arquived?.toString() === "false") {
-        filtredNote = userExists.notes.filter(
-          (note) =>
-            note.detail.includes(detail.toString()) && note.arquived === false
-        );
-      }
-
-      if (detail != undefined && arquived?.toString() === "true") {
-        filtredNote = userExists.notes.filter((note) =>
-          note.detail.includes(detail.toString())
-        );
-      }
-
-      if (detail === undefined && arquived === undefined) {
-        filtredNote = userExists.notes.filter((note) => note.arquived === true);
-      }
 
       return res.status(200).send({
         ok: true,
@@ -56,7 +40,6 @@ export class NotesController {
           id: note.id,
           description: note.description,
           detail: note.detail,
-          arquived: note.arquived,
         })),
       });
     } catch (error: any) {
