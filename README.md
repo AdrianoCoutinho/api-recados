@@ -1,9 +1,8 @@
 # Rotas para utilizar a API
-
+<br>
 ## A API não possui banco de dados, a próxima versão possui esta feature.
-
-
-
+<br>
+<br>
 > POST - https://api-recados-zydr.onrender.com/user --> Criação de usuário
 ```
 
