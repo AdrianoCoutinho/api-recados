@@ -2,7 +2,7 @@
 
 ## A API não possui banco de dados, a próxima versão possui esta feature.
 
-### POST - https://api-recados-zydr.onrender.com/user --> Criação de usuário
+> POST - https://api-recados-zydr.onrender.com/user --> Criação de usuário
 ```
 
 curl --location 'https://api-recados-zydr.onrender.com/user' \
