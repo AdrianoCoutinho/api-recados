@@ -40,3 +40,23 @@ curl --location --request POST 'https://api-recados-zydr.onrender.com/user/:id' 
 
 ```
 
+> POST - https://api-recados-zydr.onrender.com/user/:id/notes --> Criar nota (trocar ":id" pelo ID do usuário que é obtido ao fazer login)
+```
+
+curl --location 'https://api-recados-zydr.onrender.com/user/:id/notes' \
+--header 'Content-Type: application/json' \
+--data '{
+    "detail": "Detalhamento",
+    "description": "descrição"
+}'
+
+```
+
+> GET - https://api-recados-zydr.onrender.com/user/:id/notes --> Buscar notas do usuário (trocar ":id" pelo ID do usuário que é obtido ao fazer login)
+```
+
+curl --location 'https://api-recados-zydr.onrender.com/user/:id/notes' \
+--header 'Content-Type: application/json'
+
+```
+
