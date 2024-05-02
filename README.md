@@ -60,3 +60,15 @@ curl --location 'https://api-recados-zydr.onrender.com/user/:id/notes' \
 
 ```
 
+> PUT - https://api-recados-zydr.onrender.com/user/:id/notes/:id --> Editar notas do usuário (trocar ":id" pelo ID do usuário que é obtido ao fazer login e segundo :id pelo id da nota)
+```
+
+curl --location --request PUT 'http://localhost:3333/user/3c38450d-3848-43aa-9f0c-13d6c3b0175f/notes/993330e3-e693-4d6f-a797-700b0f08bfb2' \
+--header 'Content-Type: application/json' \
+--data '{
+    "detail": "Detalhamento editado b2",
+    "description": "descrição editado b2"
+}'
+
+```
+
