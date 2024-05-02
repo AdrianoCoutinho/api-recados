@@ -18,6 +18,7 @@ curl --location 'https://api-recados-zydr.onrender.com/user' \
 
 ```
 
+
 > POST - https://api-recados-zydr.onrender.com/user/login --> Login
 ```
 
@@ -30,15 +31,12 @@ curl --location 'https://api-recados-zydr.onrender.com/user/login' \
 
 ```
 
+
 > GET - https://api-recados-zydr.onrender.com/user/:id --> Buscar usuário por ID (trocar ":id" pelo ID do usuário que é obtido ao fazer login)
 ```
 
-curl --location 'https://api-recados-zydr.onrender.com/user/login' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "email": "adriano@example.com",
-    "password": "123123"
-}'
+curl --location --request POST 'https://api-recados-zydr.onrender.com/user/:id' \
+--header 'Content-Type: application/json'
 
 ```
 
